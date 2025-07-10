@@ -27,4 +27,17 @@ export class Player extends Container {
     this.sprite.anchor.set(0.5)
     this.addChild(this.sprite)
   }
+
+  get radius(): number {
+    return (this.sprite.width * this.sprite.scale.x) / 2
+  }
+
+  get boundingRadius(): number {
+    // Get local bounds, apply scale
+    const bounds = this.sprite.getLocalBounds()
+    const halfWidth = (bounds.width * this.sprite.scale.x) / 2
+    const halfHeight = (bounds.height * this.sprite.scale.y) / 2
+    // Use circle circumscribing the rectangle
+    return Math.hypot(halfWidth, halfHeight)
+  }
 }

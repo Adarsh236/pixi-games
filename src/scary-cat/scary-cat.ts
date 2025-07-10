@@ -112,8 +112,7 @@ export class ScaryCatGame {
     this.dispSprite.x += 0.5 * delta
     this.dispSprite.y += 0.5 * delta
     // Maintain filter scale
-    this.dispFilter.scale.x = this.dispFilter.scale.y =
-      this.config.displacementScale
+    this.dispFilter.scale.set(this.config.displacementScale)
 
     // Move and bounce
     this.players.mover.x += this.speed * delta
@@ -126,16 +125,21 @@ export class ScaryCatGame {
   }
 
   private onPointerDown(): void {
-    const dx = this.players.main.x - this.players.mover.x
-    const dy = this.players.main.y - this.players.mover.y
-    const distance = Math.hypot(dx, dy)
-    const collisionDist = 50 + 25
+    const { main, mover } = this.players
 
-    if (distance <= collisionDist) {
+    const mainBounds = main.getBounds()
+    const moverBounds = mover.getBounds()
+    const isColliding =
+      mainBounds.x < moverBounds.x + moverBounds.width &&
+      mainBounds.x + mainBounds.width > moverBounds.x &&
+      mainBounds.y < moverBounds.y + moverBounds.height &&
+      mainBounds.y + mainBounds.height > moverBounds.y
+
+    if (isColliding) {
       this.level++
       this.speed = this.level
-      this.players.main.scale.set(this.players.main.scale.x * 0.8)
-      this.players.mover.x = this.players.mover.width / 2
+      main.scale.set(main.scale.x * 0.8)
+      mover.x = mover.width / 2
     } else if (this.level !== 1) {
       this.level--
       this.speed = this.level
