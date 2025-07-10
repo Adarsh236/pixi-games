@@ -12,7 +12,7 @@ import { DEFAULT_CONFIG } from "./constant"
 import type { GameConfig } from "./type"
 import { AssetManager } from "./utils"
 
-export class PondGame {
+export class ScaryCatGame {
   private app: Application
   private config: GameConfig
   private container: Container

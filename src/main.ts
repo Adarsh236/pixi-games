@@ -1,6 +1,6 @@
-import { PondGame } from "./pond-game/pond-game"
+import { ScaryCatGame } from "./scary-cat/scary-cat"
 import "./style.css"
 ;(async () => {
-  const game = new PondGame()
+  const game = new ScaryCatGame()
   await game.start()
 })()
